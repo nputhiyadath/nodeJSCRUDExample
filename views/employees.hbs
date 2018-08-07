@@ -1,0 +1,25 @@
+<p>View list of employees</p>
+<div>
+    {{#each results}}
+    <div style="margin:10px 0px 10px 0px">
+        FirstName: {{this.firstName}} <br>
+        LastName: {{this.lastName}} <br>
+        Department: {{this.department}} <br>
+        <a href="/employees/delete/{{this._id}}">Delete</a></td>
+        <a href="/employees/update/{{this._id}}">Update</a></td>
+    </div>
+    {{/each}}
+</div>
+
+<div>
+    {{#if result}}
+    <p> New employee added </p>
+    <div style="margin:10px 0px 10px 0px">
+            FirstName: {{result.firstName}} <br>
+            LastName: {{result.lastName}} <br>
+            Department: {{result.department}} <br>
+    </div>
+    {{/if}}
+</div>
+
+<a href="/">Go back</a>

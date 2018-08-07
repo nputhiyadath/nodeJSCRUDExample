@@ -1,0 +1,13 @@
+<p>Update information to submit</p>
+
+<form action="/employees/update/{{result._id}}" method="POST">
+  First name:<br>
+  <input type="text" name="firstName" value={{result.firstName}}><br>
+  Last name:<br>
+  <input type="text" name="lastName" value={{result.lastName}}><br>
+  Department: <br>
+  <input type="text" name="department" value={{result.department}}> <br><br>
+  <input type="submit" value="Submit">
+</form>
+<br><br>
+<a href="/">Go back</a>
