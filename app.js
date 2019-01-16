@@ -12,11 +12,14 @@ const employeeRouter = require('./routes/employee');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const Strategy = require('passport-facebook').Strategy;
+const Auth0Strategy = require('passport-auth0');
 const oauthConfig = require('./config/oauth2');
+const auth0config = require('./config/auth0');
 
 //End dependencies
 
 //Start passport config
+//Facebook config
 passport.use(new Strategy({
         clientID: oauthConfig.clientID,
         clientSecret: oauthConfig.clientSecret,
@@ -25,7 +28,20 @@ passport.use(new Strategy({
     },
     function (accessToken, refreshToken, profile, cb) {
         return cb(null, profile);
-    }));
+    }
+));
+
+//Auth0Config
+passport.use(new Auth0Strategy({
+        domain: auth0config.domain,
+        clientID: auth0config.clientID,
+        clientSecret: auth0config.clientSecret,
+        callbackURL: auth0config.callbackURL
+    },
+    function (accessToken, refreshToken, extraParams, profile, cb) {
+        return cb(null, profile);
+    }
+));
 
 passport.serializeUser(function (user, cb) {
     cb(null, user);
@@ -79,6 +95,28 @@ app.get('/login/facebook/return',
         res.redirect('/');
     });
 
+//End FB routes
+
+
+//Start Auth0 routes
+app.get('/login/auth0',
+    passport.authenticate('auth0', {}), function (req, res) {
+        res.redirect("/");
+    });
+
+app.get('/login/callback',
+    passport.authenticate('auth0', {failureRedirect: '/login'}),
+    function (req, res) {
+        if (!req.user) {
+            throw new Error('user null');
+        }
+        res.redirect("/");
+    }
+);
+
+//End Auth0 routes
+
+//Start Login Logout Common
 app.get('/login', (req, res) => {
     res.render('login');
 });
@@ -88,8 +126,9 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
-//End FB routes
+//End Login Logout Common
 
+//Routers from module
 app.use('/', indexRouter);
 app.use('/employees', employeeRouter);
 
