@@ -1,3 +1,3 @@
 module.exports = {
-    URL: 'mongodb://127.0.0.1:27017/employee'
+    URL: 'mongodb://nidhish:sail2boat3@ds155461.mlab.com:55461/nidhish'
 }
