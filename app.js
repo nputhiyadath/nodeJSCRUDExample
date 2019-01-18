@@ -57,8 +57,6 @@ passport.deserializeUser(function (obj, cb) {
 
 const app = express();
 
-const db = require('./config/db');
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
