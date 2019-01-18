@@ -150,7 +150,7 @@ app.use((err, req, res) => {
 
 //Connect to MongoDB
 
-mongoose.connect(db.URL, {useNewUrlParser: true}).then(
+mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true}).then(
     () => {
         console.log('connection successful');
     }
