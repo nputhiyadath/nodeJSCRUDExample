@@ -1,4 +1,5 @@
 //Start dependencies
+require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -13,18 +14,16 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const Strategy = require('passport-facebook').Strategy;
 const Auth0Strategy = require('passport-auth0');
-const oauthConfig = require('./config/oauth2');
-const auth0config = require('./config/auth0');
 
 //End dependencies
 
 //Start passport config
 //Facebook config
 passport.use(new Strategy({
-        clientID: oauthConfig.clientID,
-        clientSecret: oauthConfig.clientSecret,
-        callbackURL: oauthConfig.callbackURL,
-        profileFields: oauthConfig.profileFields
+        clientID: process.env.OAUTH2_CLIENTID,
+        clientSecret: process.env.OAUTH2_CLIENTSECRET,
+        callbackURL: process.env.OAUTH2_CALLBACKURL,
+        profileFields: ['id', 'displayName', 'photos', 'email']
     },
     function (accessToken, refreshToken, profile, cb) {
         return cb(null, profile);
@@ -33,10 +32,10 @@ passport.use(new Strategy({
 
 //Auth0Config
 passport.use(new Auth0Strategy({
-        domain: auth0config.domain,
-        clientID: auth0config.clientID,
-        clientSecret: auth0config.clientSecret,
-        callbackURL: auth0config.callbackURL
+        domain: process.env.AUTH0_DOMAINNAME,
+        clientID: process.env.AUTH0_CLIENTID,
+        clientSecret: process.env.AUTH0_CLIENTSECRET,
+        callbackURL: process.env.AUTH0_CALLBACKURL
     },
     function (accessToken, refreshToken, extraParams, profile, cb) {
         return cb(null, profile);

@@ -20,7 +20,8 @@
     "passport-facebook": "^2.1.1",
     "passport-auth0": "^1.1.0",
     "connect-ensure-login": "^0.1.1",
-    "express-session": "^1.15.6"
+    "express-session": "^1.15.6",
+    "dotenv": "^6.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.9"
